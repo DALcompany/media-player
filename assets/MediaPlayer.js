@@ -37,8 +37,22 @@ function MediaPlayer(config) {
 }
 
 MediaPlayer.prototype._initPlugins = function () {
+  const player = {
+    play: () => this.play(),
+    pause: () => this.pause(),
+    media: this.media,
+    get muted() {
+      return this.media.muted
+    },
+    set muted (value) {
+      if (value === true) {
+        this.media.muted = value
+      }
+    }
+  }
+
   this.plugins.forEach(plugin => {
-    plugin.run(this)
+    plugin.run(player)
   });
 }
 
@@ -92,11 +106,8 @@ MediaPlayer.prototype.togglePlay = function () {
 
 MediaPlayer.prototype.displayPannelControl = function () {
   if (this.pannelControl) {
-
-    console.log(this.stateSound())
     
     btnPlay.appendChild((this.stateVideo()) ? imgPlay : imgPause)
-
     btnMute.appendChild((this.stateSound()) ? imgMute : imgUnmute)
 
     btnPlay.onclick = () => {
