@@ -2,18 +2,19 @@ import MediaPlayer from './MediaPlayer'
 import AutoPlay from './plugins/AutoPlay'
 import AutoPause from './plugins/AutoPause'
 
-const movie = document.querySelector('.movie')
+const video = document.querySelector('.movie')
+const container = document.querySelector('.pannel-control')
 
 const player = new MediaPlayer({ 
-  media: movie, 
-  pannelControl: document.querySelector('.pannel-control'), 
+  video: video, 
+  container: container,
   plugins: [
     new AutoPlay(),
     new AutoPause()
-  ] 
+  ],
 })
 
-player.displayPannelControl()
+player.displayContainerPanel()
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(err => {
